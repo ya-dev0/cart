@@ -13,11 +13,8 @@ export default function CartItem({ item, quantity }) {
 
     if (basketIndex >= 0) {
       newBasket[basketIndex].quantity += 1;
-    } else {
-      newBasket.push({ id, quantity: 1 });
+      setBasket(newBasket);
     }
-
-    setBasket(newBasket);
   };
 
   const decrement = () => {
@@ -28,6 +25,7 @@ export default function CartItem({ item, quantity }) {
       if (newBasket[basketIndex].quantity > 1) {
         newBasket[basketIndex].quantity -= 1;
       } else {
+        // Remove item from basket if quantity is zero
         newBasket = newBasket.filter(basketItem => basketItem.id !== id);
       }
       setBasket(newBasket);
@@ -43,7 +41,7 @@ export default function CartItem({ item, quantity }) {
     <div className="cart-item border-2 border-gray-800 rounded flex">
       <img width="100" src={img} alt={name} />
 
-      <div className="details p-4 flex flex-col justify-between">
+      <div className="details p-4 flex flex-col justify-between w-full">
         <div className="title-price-x flex justify-between items-center">
           <h4 className="title-price flex items-center gap-2">
             <p className="text-lg font-bold">{name}</p>
@@ -52,15 +50,24 @@ export default function CartItem({ item, quantity }) {
           <i onClick={removeItem} className="bi bi-x-lg text-red-500 cursor-pointer"></i>
         </div>
 
-        <div className="cart-buttons flex items-center">
-          <div className="buttons flex items-center gap-2 text-lg">
-            <i onClick={decrement} className="bi bi-dash-lg text-red-500 cursor-pointer"></i>
-            <div id={id} className="quantity">{quantity}</div>
-            <i onClick={increment} className="bi bi-plus-lg text-green-500 cursor-pointer"></i>
+        <div className="cart-buttons flex items-center justify-between mt-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={decrement}
+              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            >
+              -
+            </button>
+            <div id={id} className="text-lg font-bold">{quantity}</div>
+            <button
+              onClick={increment}
+              className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
+            >
+              +
+            </button>
           </div>
+          <h3 className="text-xl font-bold">$ {quantity * price}</h3>
         </div>
-
-        <h3 className="text-xl font-bold">$ {quantity * price}</h3>
       </div>
     </div>
   );
