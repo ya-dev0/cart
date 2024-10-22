@@ -1,4 +1,3 @@
-// components/ShopItem.js
 "use client";
 
 import { useContext } from 'react';
@@ -65,10 +64,20 @@ export default function ShopItem({ item }) {
               Add to Cart
             </button>
           ) : (
-            <div className="flex items-center gap-2 text-lg">
-              <i onClick={decrement} className="bi bi-dash-lg text-red-500 cursor-pointer"></i>
-              <div id={id} className="quantity">{quantity}</div>
-              <i onClick={increment} className="bi bi-plus-lg text-green-500 cursor-pointer"></i>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={decrement}
+                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+              >
+                -
+              </button>
+              <div id={id} className="text-lg font-bold">{quantity}</div>
+              <button
+                onClick={increment}
+                className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
+              >
+                +
+              </button>
             </div>
           )}
         </div>
